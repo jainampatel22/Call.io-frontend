@@ -1,35 +1,65 @@
-import React, { createContext, useContext, useMemo, ReactNode } from "react";
-import { io, Socket as SocketIOClient } from "socket.io-client";
+import SocketIoClient from "socket.io-client";
+import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Peer from "peerjs";
+import { v4 as UUIDv4 } from "uuid";
 
-// Define a type for the Socket
-type SocketContextType = SocketIOClient | null;
+const WS_Server = "http://localhost:8080";
 
-// Create a context with the initial value as null
-const SocketContext = createContext<SocketContextType>(null);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const SocketContext = createContext<any | null>(null);
 
-// Define the type for the provider props
-interface SocketProviderProps {
-  children: ReactNode;
+const socket = SocketIoClient(WS_Server, {
+    withCredentials: false,
+    transports: ["polling", "websocket"]
+});
+
+interface Props {
+    children: React.ReactNode
 }
 
-export const SocketProvider: React.FC<SocketProviderProps> = (props) => {
-  // Memoize the socket instance to avoid re-creating it on every render
-  const socket = useMemo(() => io("http://localhost:8000"), []);
+export const SocketProvider: React.FC<Props> = ({ children }) => {
 
-  return (
-    <SocketContext.Provider value={socket}>
-      {props.children}
-    </SocketContext.Provider>
-  );
-};
+    const navigate = useNavigate(); // will help to programatically handle navigation
+    
+    // state variable to store the userId 
+    const [user, setUser] = useState<Peer>(); // new peer user
+ const [stream, setStream] = useState<MediaStream>() 
+const fetchMedia=async()=>{
+    const stream = await navigator.mediaDevices.getUserMedia({video:true,audio:true})
+    setStream(stream)
+}
+    useEffect(() => {
 
-// Hook to use the SocketContext
-export const useSocket = (): SocketIOClient => {
-  const socket = useContext(SocketContext);
+        const userId = UUIDv4();
+        const newPeer = new Peer(userId,{
+            host:"localhost",
+            path:'/myapp',
+            port:9000,
+        });
 
-  if (!socket) {
-    throw new Error("useSocket must be used within a SocketProvider");
-  }
+        setUser(newPeer);
+fetchMedia()
+    
+        const enterRoom = ({ roomId} : { roomId: string}) => {
+            navigate(`/room/${roomId}`); 
+        }
+        const getusers = ({roomId,participants}:{roomId:string,participants:string[]})=>{
+            console.log('all users are ')
+console.log(roomId,participants)
+        }
 
-  return socket;
-};
+        // we will transfer the user to the room page when we collect an event of room-created from server
+        socket.on("room-created", enterRoom);
+socket.on('get-users',getusers)
+       
+    }, []);
+
+
+
+    return (
+        <SocketContext.Provider value={{ socket, user,stream }}>
+            {children}
+        </SocketContext.Provider>
+    );
+}
