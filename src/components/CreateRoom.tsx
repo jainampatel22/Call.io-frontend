@@ -1,5 +1,5 @@
 import * as React from "react"
-import  { useContext, useEffect, useRef, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 const ICE_SERVERS = [
   { urls: 'stun:stun.l.google.com:19302' },
   { urls: 'stun:stun1.l.google.com:19302' },
@@ -25,7 +25,7 @@ export function CreateRoom () {
 const [email, setEmail] = useState("")
 const [roomid, setRoomid] = useState("")
 const { socket } = useContext(SocketContext) || {};
-
+console.log(roomid,email)
 const createRoom = () => {
   console.log("creating new Room", socket); // Logs socket instance for debugging
   if (socket) {

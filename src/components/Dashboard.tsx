@@ -1,11 +1,11 @@
 "use client";
 
 import { Boxes } from "./ui/background-boxes";
-import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Header } from "./Header";
-import image from '../assets/21f64717-e5b7-49c7-baa2-5843639a3ff4.webp'
+
 import { Video, Phone } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 export function Dashboard() {
