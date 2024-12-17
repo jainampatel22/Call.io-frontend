@@ -1,12 +1,6 @@
-import * as React from "react"
-import  { useContext, useEffect, useState } from 'react';
-const ICE_SERVERS = [
-  { urls: 'stun:stun.l.google.com:19302' },
-  { urls: 'stun:stun1.l.google.com:19302' },
-  { urls: 'stun:stun2.l.google.com:19302' },
-  { urls: 'stun:stun3.l.google.com:19302' },
-  { urls: 'stun:stun4.l.google.com:19302' },
-];
+
+import  { useContext, useState } from 'react';
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
