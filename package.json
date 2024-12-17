@@ -7,8 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "serve -s dist" 
+    "preview": "vite preview"
+
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.1",

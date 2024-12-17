@@ -69,12 +69,12 @@ export const SocketProvider: React.FC<Props> = ({ children }) => {
 
     const userId = UUIDv4();
     const newPeer = new Peer(userId, {
-    //   host: "0.peerjs.com",
-    //   port: 443,
-    //   path: "/",
-    //   secure: true,
-    port:9000,
-    path:"/myapp"
+      host: "0.peerjs.com",
+      port: 443,
+      path: "/",
+      secure: true,
+    // port:9000,
+    // path:"/myapp"
     });
 
     newPeer.on('open', () => {
