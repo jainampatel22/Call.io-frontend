@@ -25,6 +25,8 @@ export const SocketProvider: React.FC<Props> = ({ children }) => {
     const newSocket = io(WS_SERVER, {
       transports: ['websocket', 'polling'],
       reconnectionAttempts: 5,
+      reconnection:true,
+      timeout: 60000,
       reconnectionDelay: 1000,
     });
 
