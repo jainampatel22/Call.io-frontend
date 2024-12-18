@@ -1,80 +1,115 @@
-// import * as React from "react"
-// import { useEffect, useState, useCallback } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { SocketContext } from "@/context/SocketProviders";
+import { Boxes } from "@/components/ui/background-boxes";
+import { Header } from "@/components/Header";
 
-// import { Button } from "@/components/ui/button"
-// import { useNavigate  } from "react-router-dom";
-// import {
-//   Card,
-//   CardContent,
-//   CardDescription,
-//   CardFooter,
-//   CardHeader,
-//   CardTitle,
-// } from "@/components/ui/card"
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
+export function JoinRoomPage() {
+  const [username, setUsername] = useState("");
+  const [roomId, setRoomId] = useState("");
+  const { socket, user } = useContext(SocketContext) || {};
+  const navigate = useNavigate();
 
-// import { Boxes } from "./ui/background-boxes"
-// import { Header } from "./Header"
+  const handleJoinRoom = () => {
+    // Validate inputs
+    if (!username || !roomId) {
+      alert("Please enter both username and room ID");
+      return;
+    }
 
-// export function JoinRoom() {
-//   const [email, setEmail] = useState("")
-//   const [roomId, setRoomId] = useState("")
-//   const socket = useSocket()
-//   const navigate = useNavigate()
-  
-//   return (
-//     <>
-//       <div className="z-10 bg-black text-white">
-//         <Header />
-//       </div>
+    if (!socket || !user) {
+      alert("Socket or Peer connection not established");
+      return;
+    }
 
-//       <div className="bg-black text-white flex justify-center items-center min-h-screen w-full">
+    // Emit join room event
+    socket.emit("joined-room", {
+      roomId,
+      peerId: user.id,
+      username
+    });
 
-//         <Boxes />
+    // Listen for successful room join
+    const handleRoomJoined = ({ roomId }: { roomId: string }) => {
+      // Navigate to the room
+      navigate(`/room/${roomId}`);
+      
+      // Remove the listener to prevent memory leaks
+      socket.off("room-joined", handleRoomJoined);
+    };
 
-//         <Card className="w-[350px] z-10 bg-black">
-//           <form >
-//             <CardHeader>
-//               <CardTitle>Join Room</CardTitle>
-//               <CardDescription>Connect with your friends or family in 1 click</CardDescription>
-//             </CardHeader>
-//             <CardContent>
+    // Listen for room join errors
+    const handleRoomError = (error: { message: string }) => {
+      console.error("Room join error:", error);
+      alert(error.message || "Failed to join room");
+      
+      // Remove the error listener
+      socket.off("room-error", handleRoomError);
+    };
 
-//               <div className="grid w-full items-center gap-4">
-//                 <div className="flex flex-col space-y-1.5">
-//                   <Label htmlFor="name">Name</Label>
-//                   <Input
-//                     id="name"
-//                     placeholder="Enter Your Name"
-//                     className="rounded-xl"
-//                     onChange={(e) => setEmail(e.target.value)}
-//                   />
-//                 </div>
-//                 <div className="flex flex-col space-y-1.5">
-//                   <Label htmlFor="Roomid">Room Id</Label>
-//                   <Input
-//                     type="text"
-//                     name="text"
-//                     placeholder="Enter RoomId"
-//                     className="rounded-xl"
-//                     onChange={(e) => setRoomId(e.target.value)}
-//                   />
-//                 </div>
-//               </div>
+    socket.on("room-joined", handleRoomJoined);
+    socket.on("room-error", handleRoomError);
+  };
 
+  return (
+    <>
+      <div className="z-10 bg-black text-white">
+        <Header />
+      </div>
 
-//             </CardContent>
-
-//             <CardFooter className="flex justify-between">
-//               <Button >Cancel</Button>
-//               <Button variant="outline" type="submit" >Join</Button>
-//             </CardFooter>
-//           </form>
-//         </Card>
-
-//       </div>
-//     </>
-
-//   )
-// }
+      <div className="bg-black text-white flex justify-center items-center min-h-screen w-full">
+        <Boxes />
+        <Card className="w-[350px] z-10 bg-black border-white/20">
+          <CardHeader>
+            <CardTitle className="text-white">Join Room</CardTitle>
+            <CardDescription className="text-white/70">
+              Enter an existing room ID to join
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="username" className="text-white">Username</Label>
+                <Input 
+                  id="username" 
+                  placeholder="Enter your name" 
+                  className="rounded-xl bg-black/50 border-white/20 text-white"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+              
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="roomId" className="text-white">Room ID</Label>
+                <Input 
+                  id="roomId" 
+                  placeholder="Enter Room ID" 
+                  className="rounded-xl bg-black/50 border-white/20 text-white"
+                  value={roomId}
+                  onChange={(e) => setRoomId(e.target.value)}
+                />
+              </div>
+              
+              <Button 
+                onClick={handleJoinRoom} 
+                className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white"
+              >
+                Join Room
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </>
+  );
+}

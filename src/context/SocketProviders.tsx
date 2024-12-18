@@ -6,7 +6,7 @@ import { v4 as UUIDv4 } from "uuid";
 import { peerReducer } from "@/Reducers/peerReducers";
 import { addPeerAction } from "@/Actions/peerActions";
 
-const WS_SERVER = import.meta.env.VITE_WS_SERVER || "https://call-io-backend.onrender.com/";
+const WS_SERVER = import.meta.env.VITE_WS_SERVER || "https://call-io-backend.onrender.com";
 
 export const SocketContext = createContext<any | null>(null);
 
@@ -20,12 +20,14 @@ export const SocketProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<Peer>();
   const [stream, setStream] = useState<MediaStream>();
   const [peers, dispatch] = useReducer(peerReducer, {});
+  const [roomId, setRoomId] = useState<string | null>(null);
 
+  // Socket Connection
   useEffect(() => {
     const newSocket = io(WS_SERVER, {
       transports: ['websocket', 'polling'],
       reconnectionAttempts: 5,
-      reconnection:true,
+      reconnection: true,
       timeout: 60000,
       reconnectionDelay: 1000,
     });
@@ -44,28 +46,20 @@ export const SocketProvider: React.FC<Props> = ({ children }) => {
     };
   }, []);
 
-  const fetchParticipantList = ({
-    roomId,
-    participants,
-  }: {
-    roomId: string;
-    participants: string[];
-  }) => {
-    console.log("Fetched room participants", roomId, participants);
-  };
-
+  // Media Stream Acquisition
   const fetchUserFeed = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
       });
-      setStream(stream);
+      setStream(mediaStream);
     } catch (error) {
       console.error("Error accessing media devices:", error);
     }
   };
 
+  // Peer Connection Setup
   useEffect(() => {
     if (!socket) return;
 
@@ -75,8 +69,6 @@ export const SocketProvider: React.FC<Props> = ({ children }) => {
       port: 443,
       path: "/",
       secure: true,
-    // port:9000,
-    // path:"/myapp"
     });
 
     newPeer.on('open', () => {
@@ -90,50 +82,81 @@ export const SocketProvider: React.FC<Props> = ({ children }) => {
 
     fetchUserFeed();
 
-    const enterRoom = ({ roomId }: { roomId: string }) => {
+    // Room Creation and Joining Handlers
+    const handleRoomCreated = ({ roomId }: { roomId: string }) => {
+      setRoomId(roomId);
       navigate(`/room/${roomId}`);
     };
 
-    socket.on("room-created", enterRoom);
-    socket.on("get-users", fetchParticipantList);
+    const handleRoomJoined = ({ roomId }: { roomId: string }) => {
+      setRoomId(roomId);
+      navigate(`/room/${roomId}`);
+    };
+
+    socket.on("room-created", handleRoomCreated);
+    socket.on("room-joined", handleRoomJoined);
+
+    // Participant Tracking
+    const handleGetUsers = ({
+      roomId,
+      participants,
+    }: {
+      roomId: string;
+      participants: string[];
+    }) => {
+      console.log("Fetched room participants", roomId, participants);
+    };
+
+    socket.on("get-users", handleGetUsers);
 
     return () => {
-      socket.off("room-created");
-      socket.off("get-users");
+      socket.off("room-created", handleRoomCreated);
+      socket.off("room-joined", handleRoomJoined);
+      socket.off("get-users", handleGetUsers);
       newPeer.destroy();
     };
-  }, [socket]);
+  }, [socket, navigate]);
 
+  // WebRTC Peer Connection Handling
   useEffect(() => {
     if (!socket || !user || !stream) return;
 
-    socket.on("user-joined", ({ peerId }) => {
+    const handleUserJoined = ({ peerId }: { peerId: string }) => {
       const call = user.call(peerId, stream);
       console.log("Calling the new peer", peerId);
       call.on("stream", (peerStream) => {
         dispatch(addPeerAction(peerId, peerStream));
       });
-    });
+    };
 
-    user.on("call", (call) => {
+    const handleIncomingCall = (call: any) => {
       console.log("receiving a call from", call.peer);
       call.answer(stream);
-      call.on("stream", (peerStream) => {
+      call.on("stream", (peerStream: MediaStream) => {
         dispatch(addPeerAction(call.peer, peerStream));
       });
-    });
+    };
+
+    socket.on("user-joined", handleUserJoined);
+    user.on("call", handleIncomingCall);
 
     socket.emit("ready");
 
     return () => {
-      socket.off("user-joined");
+      socket.off("user-joined", handleUserJoined);
+      user.off("call", handleIncomingCall);
     };
   }, [socket, user, stream]);
 
   return (
-    <SocketContext.Provider value={{ socket, user, stream, peers }}>
+    <SocketContext.Provider value={{ 
+      socket, 
+      user, 
+      stream, 
+      peers, 
+      roomId 
+    }}>
       {children}
     </SocketContext.Provider>
   );
 };
-
