@@ -5,7 +5,7 @@ import Peer from "peerjs";
 import { v4 as UUIDv4 } from "uuid";
 import { peerReducer } from "@/Reducers/peerReducers";
 import { addPeerAction } from "@/Actions/peerActions";
-const WS_Server = "http://localhost:8080";
+const WS_Server = "https://call-io-backend.onrender.com";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const SocketContext = createContext<any | null>(null);
