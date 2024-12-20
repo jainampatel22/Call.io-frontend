@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SocketContext } from "@/context/SocketProviders";
 import { Boxes } from "@/components/ui/background-boxes";
-import { Header } from "@/components/Header";
+
 
 export function JoinRoomPage() {
   const [username, setUsername] = useState("");
