@@ -6,21 +6,21 @@ import UserFeedPlayer from "./UserFeedPlayer"
 import { SocketContext } from "@/context/SocketProviders"
 interface Peer {
     stream: MediaStream
-    name?: string
+    username?: string
   }
   const Room: React.FC = () => {
     const params = useParams()
     const id = params.id as string
-    const { socket, user, stream, peers } = useContext(SocketContext)
+    const { socket, user, stream, peers,username } = useContext(SocketContext)
   
     useEffect(() => {
       if (user) {
         console.log("New user with id", user._id, "has joined room", id)
-        socket.emit("joined-room", { roomId: id, peerId: user._id })
+        socket.emit("joined-room", { roomId: id, peerId: user._id ,username})
       }
-    }, [id, user, socket])
+    }, [id, user, socket,username])
   
-    const totalParticipants = Object.keys(peers).length + 1 // +1 for the current user
+    const totalParticipants = Object.keys(peers).length + 1 
     const gridClass = getGridClass(totalParticipants)
   
     return (
@@ -30,14 +30,14 @@ interface Peer {
           <div className="relative">
             <UserFeedPlayer stream={stream} />
             <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded">
-              You
+              You ( {username} )
             </div>
           </div>
           {Object.entries(peers).map(([peerId, peer]) => (
             <div key={peerId} className="relative">
               <UserFeedPlayer stream={(peer as Peer).stream} />
               <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded">
-                {(peer as Peer).name || `Participant ${peerId.slice(0, 4)}`}
+                {(peer as Peer).username || `Participant ${peerId.slice(0, 4)}`}
               </div>
             </div>
           ))}

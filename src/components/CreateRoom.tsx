@@ -15,31 +15,34 @@ import { Boxes } from "@/components/ui/background-boxes";
 import { Header } from "@/components/Header";
 
 export function CreateRoomPage() {
-  const [username, setUsername] = useState("");
-  const { socket } = useContext(SocketContext) || {};
-  const navigate = useNavigate();
+  const [username, updateUsername] = useState(""); // Local state for username
 
+
+  const { socket,setUsername  } = useContext(SocketContext) || {};
+  const navigate = useNavigate();
+const handleusername =(e:React.ChangeEvent<HTMLInputElement>)=>{
+const value = e.target.value
+updateUsername(value);
+setUsername(value); 
+}
   const handleCreateRoom = () => {
     if (!socket) {
       alert("Socket connection not established");
       return;
     }
 
-    // Emit create room event
-    socket.emit("create-room");
+    
+    socket.emit("create-room",{username});
 
-    // Listen for room creation
+ 
     const handleRoomCreated = ({ roomId }: { roomId: string }) => {
-      // Navigate to the newly created room
       navigate(`/room/${roomId}`);
       
-      // Remove the listener to prevent memory leaks
-      socket.off("room-created", handleRoomCreated);
+         socket.off("room-created", handleRoomCreated);
     };
 
     socket.on("room-created", handleRoomCreated);
 
-    // Optional: Handle any potential errors
     socket.on("room-error", (error: { message: any; }) => {
       console.error("Room creation error:", error);
       alert(error.message || "Failed to create room");
@@ -64,13 +67,13 @@ export function CreateRoomPage() {
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="username" className="text-white">Username</Label>
+                <Label htmlFor="username" className="text-white" >Username</Label>
                 <Input 
                   id="username" 
                   placeholder="Enter your name" 
                   className="rounded-xl bg-black/50 border-white/20 text-white"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleusername}
                 />
               </div>
               
