@@ -1,4 +1,4 @@
-import {ADD_PEER,REMOVE_PEER} from '../Actions/peerActions'
+import { ADD_PEER, REMOVE_PEER } from "../Actions/peerActions";
 
 export type PeerState = Record<string, {stream: MediaStream}>;
 

@@ -33,14 +33,14 @@ export function JoinRoomPage() {
     }
 
     // Emit join room event
-    socket.emit("joined-room", {
+    socket.emit("join-room", {
       roomId,
       peerId: user.id,
       username
     });
 
     // Listen for successful room join
-    const handleRoomJoined = ({ roomId }: { roomId: string }) => {
+    const handleRoomJoined = ({ roomId  }: { roomId: string }) => {
       // Navigate to the room
       navigate(`/room/${roomId}`);
       
