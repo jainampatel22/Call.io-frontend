@@ -63,9 +63,13 @@ export function JoinRoomPage() {
 
   return (
     <>
+    
       <div className="z-10 bg-black text-white">
-        <Header />
+      <div className='bg-gray-600 text-white h-10'
+      ><h1 className='text-lg text-center font-mono'>Join Function is not working right now, you can join  meeting by enter url of the user who created meeting</h1></div>
       </div>
+        {/* <Header /> */}
+     
 
       <div className="bg-black text-white flex justify-center items-center min-h-screen w-full">
         <Boxes />
