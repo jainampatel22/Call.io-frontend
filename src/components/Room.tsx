@@ -56,18 +56,18 @@ const Room: React.FC = () => {
 
         <div className="grid gap-4 auto-rows-fr grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {/* User's Video Feed */}
-          <div className="relative aspect-video ">
+          <div className="relative -mt-10  aspect-video  ">
             <UserFeedPlayer stream={stream} />
-            <div className="absolute bottom-10 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
-              You ({username})
-            </div>
+                <div className="absolute flex bottom-20 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                You ({username})
+                </div>
           </div>
 
           {/* Peers Video Feeds */}
           {Object.entries(peers).map(([peerId, peer]) => (
-            <div key={peerId} className="relative aspect-video ">
+            <div key={peerId} className="relative -mt-10 aspect-video ">
               <UserFeedPlayer stream={(peer as Peer).stream} />
-              <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+              <div className="absolute bottom-20 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
                 {(peer as Peer).username || `Participant ${peerId.slice(0, 4)}`}
               </div>
             </div>
