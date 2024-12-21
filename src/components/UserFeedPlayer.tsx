@@ -34,7 +34,7 @@ const UserFeedPlayer: React.FC<{ stream?: MediaStream }> = ({ stream }) => {
   };
 
   return (
-    <div className="relative w-full h-1/2">
+    <div className="relative w-full h-full">
       <video
         ref={videoRef}  style={{transform:"scaleX(-1)"}}
         className="w-full h-1/2 object-cover  min-h-[300px] md:min-h-[300px] lg:min-h-[300px] lg:min-w-[400px]"
