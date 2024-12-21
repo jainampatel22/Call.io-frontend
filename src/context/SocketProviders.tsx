@@ -69,9 +69,9 @@ const [username, setUsername] = useState("")
         socket.on("user-joined", ({peerId,username}) => {
             const call = user.call(peerId, stream);
             console.log("Calling the new peer", peerId);
-            call.on("stream", () => {
+            call.on("stream", (remoteStream) => {
               
-                dispatch(addPeerAction(peerId, stream,username));
+                dispatch(addPeerAction(peerId, remoteStream,username));
             })
         })
 
