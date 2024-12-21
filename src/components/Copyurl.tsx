@@ -8,18 +8,9 @@ interface CopyUrlProps {
 
 const CopyUrl: React.FC<CopyUrlProps> = ({ isOpen, onClose }) => {
   const [copied, setCopied] = useState(false);
-  const url = window.location.href; // The full URL of the current page
-  const { id } = useParams<{ id: string }>(); // Room ID extracted from URL parameters
+   const { id } = useParams<{ id: string }>(); // Room ID extracted from URL parameters
 
-  const handleWholeCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(url); // Copy the entire URL to clipboard
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000); // Reset "Copied" message after 3 seconds
-    } catch (error) {
-      console.error("Failed to copy: ", error);
-    }
-  };
+
 
   const handleIdCopy = async () => {
     try {
@@ -41,10 +32,10 @@ const CopyUrl: React.FC<CopyUrlProps> = ({ isOpen, onClose }) => {
       role="dialog"
     >
       <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow p-6 w-full max-w-md">
-        {/* Header */}
+     
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-            Meeting Link and Room ID
+            Copy Room Id
           </h3>
           <button
             onClick={onClose}
@@ -69,51 +60,11 @@ const CopyUrl: React.FC<CopyUrlProps> = ({ isOpen, onClose }) => {
 
         {/* Body */}
         <div className="mt-4">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Share the meeting link with your friends or family:
-          </label>
-          <div className="relative mb-4">
-            <input
-              type="text"
-              value={url}
-              readOnly
-              className="w-full bg-gray-100 dark:bg-gray-700 text-sm text-gray-600 dark:text-gray-400 p-2.5 rounded-md border dark:border-gray-600"
-            />
-            <button
-              onClick={handleWholeCopy}
-              className="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-100 dark:bg-gray-700 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-800"
-            >
-              {copied ? (
-                <svg
-                  className="w-4 h-4 text-blue-600"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 16 12"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M1 5.917L5.724 10.5 15 1.5"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="w-4 h-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 18 20"
-                >
-                  <path d="M16 1h-3.278A1.992 1.992 0 0 0 11 0H7a1.993 1.993 0 0 0-1.722 1H2a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2Zm-3 14H5a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-4H5a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-5H5a1 1 0 0 1 0-2h2V2h4v2h2a1 1 0 1 1 0 2Z" />
-                </svg>
-              )}
-            </button>
-          </div>
-
+        
+          
           {/* Room ID */}
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Or copy the Room ID:
+            Room Id:
           </label>
           <div className="relative">
             <input

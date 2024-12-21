@@ -40,7 +40,7 @@ const UserFeedPlayer: React.FC<{ stream?: MediaStream }> = ({ stream }) => {
         className="w-full h-1/2 object-cover  min-h-[300px] md:min-h-[300px] lg:min-h-[300px] lg:min-w-[400px]"
         autoPlay
         playsInline
-        muted
+        
       />
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-4 items-center justify-center z-10">
         <Button 
