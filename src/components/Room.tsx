@@ -5,6 +5,8 @@ import { useContext, useEffect, useState } from "react";
 import UserFeedPlayer from "./UserFeedPlayer";
 import { SocketContext } from "@/context/SocketProviders";
 import CopyUrl from "./Copyurl";
+import { Button } from "@/components/ui/button";
+import { Users, Link } from 'lucide-react';
 
 interface Peer {
   stream: MediaStream;
@@ -25,33 +27,45 @@ const Room: React.FC = () => {
   }, [id, user, socket, username]);
 
   const totalParticipants = Object.keys(peers).length + 1;
-  const gridClass = getGridClass(totalParticipants);
 
   return (
-    <>
-      <div className="flex justify-end p-5">
-        <button
-          className="bg-black text-white px-4 py-2 rounded-xl"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Invite Others!
-        </button>
-        <CopyUrl isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      </div>
-      <div className="container mx-auto px-4 sm:px-8 md:px-16">
-        <h1 className="text-2xl font-bold mb-4 text-center">Video Chat Room</h1>
-        <div className={`grid gap-4 ${gridClass}`}>
+    <div className="min-h-screen p-4">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Video Chat Room</h1>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="default"
+              size="sm"
+              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              <Users className="w-4 h-4" />
+              <span>{totalParticipants}</span>
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={() => setIsModalOpen(true)}
+              className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              <Link className="w-4 h-4" />
+              <span className="hidden sm:inline">Invite</span>
+            </Button>
+          </div>
+        </div>
+
+        <div className="grid gap-4 auto-rows-fr grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {/* User's Video Feed */}
-          <div className="relative">
+          <div className="relative aspect-video ">
             <UserFeedPlayer stream={stream} />
-            <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+            <div className="absolute bottom-10 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
               You ({username})
             </div>
           </div>
 
           {/* Peers Video Feeds */}
           {Object.entries(peers).map(([peerId, peer]) => (
-            <div key={peerId} className="relative">
+            <div key={peerId} className="relative aspect-video ">
               <UserFeedPlayer stream={(peer as Peer).stream} />
               <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
                 {(peer as Peer).username || `Participant ${peerId.slice(0, 4)}`}
@@ -60,28 +74,10 @@ const Room: React.FC = () => {
           ))}
         </div>
       </div>
-    </>
+      <CopyUrl isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </div>
   );
 };
 
-function getGridClass(participantCount: number): string {
-  switch (participantCount) {
-    case 1:
-      return "grid-cols-1";
-    case 2:
-      return "grid-cols-1 sm:grid-cols-2";
-    case 3:
-      return "grid-cols-1 sm:grid-cols-2 md:grid-cols-3";
-    case 4:
-      return "grid-cols-2 md:grid-cols-2";
-    case 5:
-    case 6:
-      return "grid-cols-2 md:grid-cols-3";
-    case 7:
-      return "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4";
-    default:
-      return "grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4";
-  }
-}
-
 export default Room;
+

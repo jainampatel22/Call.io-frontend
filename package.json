@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "vite preview --host 0.0.0.0 --port $PORT"
-
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.1",
@@ -22,6 +21,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.14.4",
+    "grid-util-js": "^1.1.0",
     "lucide-react": "^0.468.0",
     "mini-svg-data-uri": "^1.4.4",
     "peerjs": "^1.5.4",
