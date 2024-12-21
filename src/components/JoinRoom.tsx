@@ -1,18 +1,11 @@
-import  { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SocketContext } from "@/context/SocketProviders";
 import { Boxes } from "@/components/ui/background-boxes";
-
 
 export function JoinRoomPage() {
   const [username, setUsername] = useState("");
@@ -20,8 +13,10 @@ export function JoinRoomPage() {
   const { socket, user } = useContext(SocketContext) || {};
   const navigate = useNavigate();
 
+  // Manage error feedback for room errors
+  const [error, setError] = useState<string | null>(null);
+
   const handleJoinRoom = () => {
-    // Validate inputs
     if (!username || !roomId) {
       alert("Please enter both username and room ID");
       return;
@@ -32,44 +27,44 @@ export function JoinRoomPage() {
       return;
     }
 
-    // Emit join room event
+    // Emit the join room event
     socket.emit("join-room", {
       roomId,
       peerId: user.id,
-      username
+      username,
     });
+  };
 
-    // Listen for successful room join
-    const handleRoomJoined = ({ roomId  }: { roomId: string }) => {
-      // Navigate to the room
+  useEffect(() => {
+    if (!socket) return;
+
+    // Listener: Handle successful room join
+    const handleRoomJoined = ({ roomId }: { roomId: string }) => {
+      console.log(`Successfully joined room: ${roomId}`);
       navigate(`/room/${roomId}`);
-      
-      // Remove the listener to prevent memory leaks
-      socket.off("room-joined", handleRoomJoined);
     };
 
-    // Listen for room join errors
+    // Listener: Handle errors from server
     const handleRoomError = (error: { message: string }) => {
       console.error("Room join error:", error);
-      alert(error.message || "Failed to join room");
-      
-      // Remove the error listener
-      socket.off("room-error", handleRoomError);
+      setError(error.message || "An unexpected error occurred.");
     };
 
     socket.on("room-joined", handleRoomJoined);
     socket.on("room-error", handleRoomError);
-  };
+
+    // Cleanup listeners on component unmount
+    return () => {
+      socket.off("room-joined", handleRoomJoined);
+      socket.off("room-error", handleRoomError);
+    };
+  }, [socket, navigate]);
 
   return (
-    <>
-    
+    <div>
       <div className="z-10 bg-black text-white">
-      <div className='bg-gray-600 text-white h-10'
-      ><h1 className='text-lg text-center font-mono'>Join Function is not working right now, you can join  meeting by enter url of the user who created meeting</h1></div>
+  
       </div>
-        {/* <Header /> */}
-     
 
       <div className="bg-black text-white flex justify-center items-center min-h-screen w-full">
         <Boxes />
@@ -82,6 +77,7 @@ export function JoinRoomPage() {
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
+              {error && <p className="text-red-600 text-sm">{error}</p>}
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="username" className="text-white">Username</Label>
                 <Input 
@@ -106,7 +102,7 @@ export function JoinRoomPage() {
               
               <Button 
                 onClick={handleJoinRoom} 
-                className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white"
+                className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
               >
                 Join Room
               </Button>
@@ -114,6 +110,6 @@ export function JoinRoomPage() {
           </CardContent>
         </Card>
       </div>
-    </>
+    </div>
   );
 }
