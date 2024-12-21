@@ -1,9 +1,10 @@
 'use client'
 
 import { useParams } from "react-router-dom"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect,useState } from "react"
 import UserFeedPlayer from "./UserFeedPlayer"
 import { SocketContext } from "@/context/SocketProviders"
+import CopyUrl from "./Copyurl"
 interface Peer {
     stream: MediaStream
     username?: string
@@ -12,7 +13,8 @@ interface Peer {
     const params = useParams()
     const id = params.id as string
     const { socket, user, stream, peers,username } = useContext(SocketContext)
-  
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     useEffect(() => {
       if (user) {
         console.log("New user with id", user._id, "has joined room", id)
@@ -24,8 +26,19 @@ interface Peer {
     const gridClass = getGridClass(totalParticipants)
   
     return (
-      <div className="container mx-auto p-4">
+        <>
+        <div className="flex justify-end p-5">
+            <button     className="bg-black text-white px-4 py-2 rounded-xl"
+   onClick={()=>setIsModalOpen(true)}>Invite Others! </button>
+   <CopyUrl
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+        </div>
+      <div className="container mx-auto">
         <h1 className="text-2xl font-bold mb-4">Video Chat Room</h1>
+       
+          {/* {copied && <p className="text-green-500 font-medium">Copied!</p>} */}
         <div className={`grid gap-4 ${gridClass}`}>
           <div className="relative">
             <UserFeedPlayer stream={stream} />
@@ -43,6 +56,8 @@ interface Peer {
           ))}
         </div>
       </div>
+      
+      </>
     )
   }
   
