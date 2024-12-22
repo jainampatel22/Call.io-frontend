@@ -53,7 +53,7 @@ export default function Hero() {
                     <div className="flex items-center mt-4 sm:mt-0">
                         <div 
                             className="underline font-anzo text-bold cursor-pointer"
-                            onClick={() => router('/createroom')}
+                            onClick={() => router('/dashboard')}
                         >
                             See it in action
                         </div>

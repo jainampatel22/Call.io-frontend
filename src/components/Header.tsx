@@ -12,7 +12,7 @@ const navigate = useNavigate()
 </div>
     <div className='px-4 w-1/2  py-4 flex items-end justify-end gap-5  '>
     
-      <Button size="sm" className='rounded-full text-sm h-6 hover:text-white hover:bg-black  bg-lavender text-white' onClick={()=>{
+      <Button size="sm" className='rounded-full  text-lg h-8 hover:text-white hover:bg-black  bg-lavender text-white' onClick={()=>{
         navigate(`/createroom`)
       }}>Get a demo</Button>
     </div>
