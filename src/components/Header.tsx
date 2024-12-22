@@ -10,7 +10,7 @@ const navigate = useNavigate()
 <img src={dialpad} alt="" width={100} onClick={()=>{navigate('/')}}  />
 
 </div>
-    <div className='px-4 w-1/2  py-4 flex items-end justify-end gap-5  '>
+    <div className='px-4 w-1/2  py-3 flex items-end justify-end gap-5  '>
     
       <Button size="sm" className='rounded-full  text-lg h-8 hover:text-white hover:bg-black  bg-lavender text-white' onClick={()=>{
         navigate(`/createroom`)

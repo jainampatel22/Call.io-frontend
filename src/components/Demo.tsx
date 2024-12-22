@@ -45,7 +45,7 @@ export default function Demo() {
                             </label>
                         </div>
                         <Button size="sm" className='w-full sm:w-auto rounded-full py-2 px-4 hover:text-white hover:bg-black text-xs bg-indigo-600 text-white'>
-                            Talk to sales
+                            Submit
                         </Button>
                     </form>
                 </div>
