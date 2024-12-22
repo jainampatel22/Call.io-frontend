@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SocketContext } from "@/context/SocketProviders";
 import { Boxes } from "@/components/ui/background-boxes";
-import { Header } from "@/components/Header";
+import Header from './Header';
 
 export function CreateRoomPage() {
   const [username, updateUsername] = useState(""); // Local state for username

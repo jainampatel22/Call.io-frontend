@@ -10,6 +10,10 @@ module.exports = {
   darkMode: ["class", "class"],
   theme: {
   	extend: {
+		fontFamily:{
+			helvetica: ['Helvetica', 'Arial', 'sans-serif'],
+			anzo:['anzo1']
+		},
 		backgroundImage:{
 			'hero-pattern': "url('https://www.lemonlight.com/wp-content/uploads/2020/03/12-Dos-and-Donts-of-Successful-Video-Call-Etiquette-1.jpg')",
 		},
@@ -19,6 +23,9 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+			deepPurple:"#140B2A",
+			deepLight:"#D1D1F7",
+			lavender:"#7C52FF",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
