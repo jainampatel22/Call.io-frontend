@@ -1,0 +1,18 @@
+<svg width="59" height="54" viewBox="0 0 59 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 627779">
+<path id="Polygon 285" d="M25.8957 7.00693C27.919 4.30109 31.9898 4.34515 33.9541 7.09415L54.0268 35.186C55.8764 37.7745 54.8647 41.4096 51.9438 42.6704L31.9818 51.2869C30.718 51.8325 29.2851 51.8318 28.0218 51.2853L7.19862 42.2762C4.23963 40.996 3.25249 37.2883 5.18322 34.7063L25.8957 7.00693Z" stroke="url(#paint0_linear_3086_16584)" stroke-width="1.79542"/>
+<path id="Vector 88" d="M30.0879 51.3569L29.8352 4.94698" stroke="url(#paint1_linear_3086_16584)" stroke-width="1.79542"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_3086_16584" x1="29.4999" y1="0.017701" x2="54.8757" y2="59.5364" gradientUnits="userSpaceOnUse">
+<stop stop-color="#7C52FF"/>
+<stop offset="0.588573" stop-color="#F9008E"/>
+<stop offset="1" stop-color="#FF7A00"/>
+</linearGradient>
+<linearGradient id="paint1_linear_3086_16584" x1="22.3857" y1="17.4803" x2="49.3174" y2="28.8135" gradientUnits="userSpaceOnUse">
+<stop stop-color="#7C52FF"/>
+<stop offset="0.588573" stop-color="#F9008E"/>
+<stop offset="1" stop-color="#FF7A00"/>
+</linearGradient>
+</defs>
+</svg>

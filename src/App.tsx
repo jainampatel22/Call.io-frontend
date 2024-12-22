@@ -4,6 +4,7 @@ import { CreateRoomPage } from "./components/CreateRoom";
 import { JoinRoomPage } from "./components/JoinRoom";
 
 import Room from "./components/Room";
+import Demo from "./components/Demo";
 export default function App(){
    return (
 <>
@@ -12,6 +13,7 @@ export default function App(){
   <Route path="/createroom" element={<CreateRoomPage/>}/>
   <Route path="/joinroom" element={<JoinRoomPage/>}/>
   <Route path="/room/:id" element={<Room/>}/>
+  <Route path="/getDemo" element={<Demo/>}/>
 </Routes>
 </>
   )
