@@ -23,12 +23,12 @@ export default function Footer(){
     </p>
     <Button
       size="lg"
-      className="mt-5 rounded-full h-10 px-6 text-xs sm:text-sm hover:text-black hover:bg-white bg-black text-white"
+      className="mt-5 rounded-full h-11 font-anzo text-xl px-6  sm:text-sm hover:text-black hover:bg-white bg-black text-white"
    onClick={()=>{
 window.location.href="https://x.com/Jainam___patel/"
    }}
    >
-      Talk to sales
+      Talk to Sales
     </Button>
   </div>
 </div>

@@ -74,20 +74,20 @@ console.log(error)
       </div>
       <div className="w-full md:w-1/2 flex justify-center items-center p-4 md:p-8">
         <div className="w-full max-w-md mx-auto rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-          <h2 className="font-bold text-3xl md:text-4xl text-neutral-800 dark:text-neutral-200">
+          <h2 className="font-anzo font-bold text-3xl md:text-4xl text-neutral-800 dark:text-neutral-200">
             Welcome to Dialpad
           </h2>
-          <p className="text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
+          <p className="font-anzo text-neutral-600 text-sm max-w-sm mt-2 dark:text-neutral-300">
           Enter an existing room ID to <span className="text-xl font-bold text-indigo-600">Join.</span>
           </p>
           <div className='mt-6'>
-            <Label htmlFor="username" className="text-lg font-semibold">Username</Label>
+            <Label htmlFor="username" className="font-anzo text-lg font-semibold">Username</Label>
             <Input 
               id="username"
               className='mt-2 rounded-xl' 
               onChange={(e)=>setUsername(e.target.value)}
             />
-              <Label htmlFor="username" className="text-lg font-semibold">Room id</Label>
+              <Label htmlFor="username" className="font-anzo text-lg font-semibold">Room id</Label>
             <Input 
               id="username"
               className='mt-2 rounded-xl' 
@@ -95,7 +95,7 @@ console.log(error)
             />
             <Button 
               size="lg"
-              className="w-full mt-4 rounded-full py-2 px-6 hover:text-white hover:bg-black text-base md:text-lg bg-indigo-600 text-white"
+              className="w-full font-anzo mt-4 rounded-full py-2 px-6 hover:text-white hover:bg-black text-base md:text-lg bg-indigo-600 text-white"
               onClick={handleJoinRoom}
             >
              Join

@@ -45,7 +45,7 @@ export default function Hero() {
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-6">
                     <Button 
                         size="sm" 
-                        className='rounded-full h-10 px-4 text-sm hover:text-white hover:bg-black bg-lavender text-white w-full sm:w-auto' 
+                        className='rounded-full h-10 px-4 font-anzo text-sm hover:text-white hover:bg-black bg-lavender text-white w-full sm:w-auto' 
                         onClick={() => router('/getDemo')}
                     >
                         Request a demo
