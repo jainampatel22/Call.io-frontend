@@ -1,2 +1,7 @@
+# Exclude build and public folders from language stats
+/build/** linguist-vendored
+/public/** linguist-vendored
+
+# Treat .tsx and .ts as TypeScript
 *.tsx linguist-language=TypeScript
 *.ts linguist-language=TypeScript
