@@ -8,6 +8,7 @@ import { Label } from './ui/label';
 
 import { Input } from './ui/input';
 import { Button } from './ui/button';
+import Header from './Header';
 
 export function CreateRoomPage() {
   const [username, updateUsername] = useState(""); // Local state for username
@@ -43,6 +44,9 @@ export function CreateRoomPage() {
   };
 
   return (
+    <><Header/> 
+    
+    
     <div className='flex flex-col-reverse md:flex-row w-full min-h-screen'>
       <div className='w-full md:w-1/2 flex justify-center items-center p-4 md:p-8'>
         <img 
@@ -77,6 +81,7 @@ export function CreateRoomPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
