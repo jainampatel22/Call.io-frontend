@@ -63,6 +63,32 @@ const navigate = useNavigate()
           }
         }
       };
+      const getGridClass = () => {
+        switch(totalParticipants) {
+            case 1:
+            case 2:
+                return 'grid-cols-1 md:grid-cols-2'
+            case 3:
+                return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+            default:
+                return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+        }
+    }
+
+    
+    const getVideoClass = () => {
+        switch(totalParticipants) {
+            case 1:
+            case 2:
+                return 'h-60 md:h-[calc(100vh-16rem)]'
+            case 3:
+                return 'h-60 md:h-[calc(75vh-12rem)]'
+            default:
+                return 'h-60'
+        }
+    }
+
+
     return (
         <div className="flex flex-col md:flex-row min-h-screen">
             <nav className="md:w-20 bg-newwhite p-4 md:p-6 flex md:flex-col justify-between items-center">
@@ -75,7 +101,7 @@ const navigate = useNavigate()
             </nav>
 
             <main className="flex-grow flex flex-col">
-                <header className="bg-newwhite  p-4 m-2 rounded-3xl flex flex-wrap items-center justify-between gap-4">
+                <header className="bg-newwhite  p-3 m-2 rounded-3xl flex flex-wrap items-center justify-between gap-4">
                     <h1 className="font-anzo text-xl">Preparing For The Holiday</h1>
                     <div className="flex items-center gap-4">
                         <span className='font-anzo text-gray-500 text-xl font-bold'>{totalParticipants}</span>
@@ -85,17 +111,18 @@ const navigate = useNavigate()
                     </div>
                 </header>
 
-                <div className="flex-grow p-4 overflow-y-auto">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
+                <div className="flex-grow p-5 overflow-y-auto">
+                    <div className={`grid ${getGridClass()} gap-8`}>
                         <div className='relative'>
                             <video
                                 ref={videoRef}
-                                className="w-2/3 ml-16 sm:w-full h-72 sm:h-72 object-cover rounded-2xl transform scale-x-[-1]"
+                                className={`w-full object-cover sm:ml-4 rounded-2xl transform scale-x-[-1] ${getVideoClass()}`}
+                      
                                 autoPlay
                                  muted
                                 playsInline
                             />
-                            <div className="absolute ml-20 bottom-2 left-2 bg-black bg-opacity-50 rounded-2xl text-white px-2 py-1 text-sm">
+                            <div className="absolute sm:ml-10 bottom-2 left-2 bg-black bg-opacity-50 rounded-2xl text-white px-2 py-1 text-sm">
                                 You ({username})
                             </div>
                         </div>
@@ -111,9 +138,10 @@ const navigate = useNavigate()
                                             videoElement.srcObject = (peer as Peer).stream
                                         }
                                     }}
-                                    className="w-2/3 ml-16 sm:w-full h-72 sm:h-72 object-cover rounded-2xl transform scale-x-[-1]"
-                                    />
-                                <div className="absolute bottom-2 ml-24 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
+                                    className={`w-full object-cover  rounded-2xl transform scale-x-[-1] ${getVideoClass()}`}
+                      
+                                   />
+                                <div className="absolute bottom-2 sm:ml-10 bg-black bg-opacity-50 text-white px-2 py-1 rounded text-sm">
                                     {(peer as Peer).username || `Participant ${peerId.slice(0, 4)}`}
                                 </div>
                             </div>
