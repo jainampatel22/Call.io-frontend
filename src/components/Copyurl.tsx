@@ -34,8 +34,8 @@ const CopyUrl: React.FC<CopyUrlProps> = ({ isOpen, onClose }) => {
       <div className="relative bg-white dark:bg-gray-800 rounded-lg shadow p-6 w-full max-w-md">
      
         <div className="flex items-center justify-between">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-            Copy Room Id
+          <h3 className="text-lg font-anzo text-gray-900 dark:text-white">
+            Copy <span className="font-anzo text-indigo-600">Room id</span>
           </h3>
           <button
             onClick={onClose}
@@ -63,8 +63,8 @@ const CopyUrl: React.FC<CopyUrlProps> = ({ isOpen, onClose }) => {
         
           
           {/* Room ID */}
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-            Room Id:
+          <label className="block mb-2 text-sm font-anzo text-gray-900 dark:text-gray-300">
+            Room id:
           </label>
           <div className="relative">
             <input
@@ -110,7 +110,7 @@ const CopyUrl: React.FC<CopyUrlProps> = ({ isOpen, onClose }) => {
         <div className="mt-4">
           <button
             onClick={onClose}
-            className="w-full py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+            className="w-full py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md"
           >
             Close
           </button>

@@ -30,6 +30,8 @@ module.exports = {
 			deepPurple:"#140B2A",
 			deepLight:"#D1D1F7",
 			lavender:"#7C52FF",
+			newwhite:"#F5F5FD",
+			cherryRed:"FF0000",
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
