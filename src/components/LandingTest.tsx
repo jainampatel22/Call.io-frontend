@@ -92,6 +92,7 @@ const navigate = useNavigate()
                                 ref={videoRef}
                                 className="w-2/3 ml-16 sm:w-full h-72 sm:h-72 object-cover rounded-2xl transform scale-x-[-1]"
                                 autoPlay
+                                 muted
                                 playsInline
                             />
                             <div className="absolute ml-20 bottom-2 left-2 bg-black bg-opacity-50 rounded-2xl text-white px-2 py-1 text-sm">
@@ -104,6 +105,7 @@ const navigate = useNavigate()
                                 <video
                                     autoPlay
                                     playsInline
+                                
                                     ref={(videoElement) => {
                                         if (videoElement) {
                                             videoElement.srcObject = (peer as Peer).stream
