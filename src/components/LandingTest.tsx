@@ -10,6 +10,7 @@ import logo from '../../public/dialpad-logo.png'
   import adduser from '../../src/assets/Add User.png'
  
 import { Mic, MicOff, Video, PhoneOff, VideoOff } from 'lucide-react';
+import ChatSidebar from "./Chat"
 interface Peer {
     stream: MediaStream
     username?: string
@@ -172,7 +173,14 @@ const navigate = useNavigate()
                     >
                         <PhoneOff color="#ec0909" strokeWidth={2}/>
                     </button>
-                </div></main>
+                </div>
+                <ChatSidebar 
+                    socket={socket} 
+                    username={username} 
+                    roomId={id}
+                    
+                />
+                </main>
             <CopyUrl isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     )
