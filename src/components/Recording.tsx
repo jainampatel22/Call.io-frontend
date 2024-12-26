@@ -1,6 +1,6 @@
-import React, { useState, useRef, useCallback } from 'react';
+import  { useState, useRef, useCallback } from 'react';
 import { Button } from "@/components/ui/button"
-import { Square, Video ,VideoOff } from 'lucide-react';
+import { Square, Video  } from 'lucide-react';
 
 export default function Recording() {
     const mediaRecorder = useRef<MediaRecorder | null>(null)
