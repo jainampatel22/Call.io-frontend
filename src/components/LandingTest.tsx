@@ -11,6 +11,7 @@ import logo from '../../public/dialpad-logo.png'
  
 import { Mic, MicOff, Video, PhoneOff, VideoOff } from 'lucide-react';
 import ChatSidebar from "./Chat"
+import Recording from "./Recording"
 interface Peer {
     stream: MediaStream
     username?: string
@@ -88,6 +89,8 @@ const navigate = useNavigate()
                 return 'h-60'
         }
     }
+
+    
 
 
     return (
@@ -173,6 +176,7 @@ const navigate = useNavigate()
                     >
                         <PhoneOff color="#ec0909" strokeWidth={2}/>
                     </button>
+                    <Recording/>
                 </div>
                 <ChatSidebar 
                     socket={socket} 
