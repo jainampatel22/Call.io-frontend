@@ -40,7 +40,7 @@ export default function Hero() {
                     Empower your team. <br />Delight your customers.
                 </div>
                 <p className="font-anzo font-light text-sm md:text-base mt-4 md:mt-5">
-                    Grow top-tier support and sales teams—all in one AI-powered customer communications platform.
+                    Grow top-tier support and sales teams—all in one customer communications platform.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center items-center gap-3 mt-6">
                     <Button 
@@ -62,7 +62,7 @@ export default function Hero() {
                 </div>
 
                 <div className="video mt-10">
-                    <video src={video} autoPlay muted loop className="w-full"></video>
+                    <video src={video} autoPlay  loop className="w-full"></video>
                 </div>
 
                 <div className="mt-10">
@@ -100,7 +100,7 @@ export default function Hero() {
                     </div>
                 </div>
 
-                <Button size="sm" className='mt-8 rounded-full h-7 text-xs hover:text-white hover:bg-black bg-lavender text-white'>
+                <Button size="lg" className='mt-8 rounded-full h-11 text-xl hover:text-white hover:bg-black bg-lavender text-white'>
                     Know our customers
                 </Button>
             </div>
