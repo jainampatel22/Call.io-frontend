@@ -82,13 +82,14 @@ const navigate = useNavigate()
         switch(totalParticipants) {
             case 1:
             case 2:
-                return 'h-60 md:h-[calc(100vh-16rem)]'
+                return 'h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh]'
             case 3:
-                return 'h-60 md:h-[calc(75vh-12rem)]'
+                return 'h-[60vh] sm:h-[65vh] md:h-[70vh] lg:h-[75vh]'
             default:
-                return 'h-60'
+                return 'h-[50vh] sm:h-[55vh] md:h-[60vh] lg:h-[65vh]'
         }
     }
+    
 
     
 
