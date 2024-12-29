@@ -62,7 +62,7 @@ export default function Hero() {
                 </div>
 
                 <div className="video mt-10">
-                    <video src={video} autoPlay  loop className="w-full"></video>
+                    <video src={video} autoPlay muted  loop className="w-full"></video>
                 </div>
 
                 <div className="mt-10">
@@ -100,7 +100,7 @@ export default function Hero() {
                     </div>
                 </div>
 
-                <Button size="lg" className='mt-8 rounded-full h-11 text-xl hover:text-white hover:bg-black bg-lavender text-white'>
+                <Button size="lg" className='mt-8 rounded-full h-11 text-xl font-anzo hover:text-white hover:bg-black bg-lavender text-white'>
                     Know our customers
                 </Button>
             </div>
