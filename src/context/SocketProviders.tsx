@@ -12,7 +12,7 @@ const WS_Server = "https://call-io-backend-jvgm.onrender.com";
 export const SocketContext = createContext<any | null>(null);
 
 const socket = SocketIoClient(WS_Server, {
-    withCredentials: false,
+    withCredentials: true,
     transports: ["polling", "websocket"]
 });
 
